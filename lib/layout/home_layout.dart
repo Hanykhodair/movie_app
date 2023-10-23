@@ -4,8 +4,22 @@ class HomeLayout extends StatelessWidget {
 static const String routeName= 'homeLayout';
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
+    return Scaffold(
+extendBody: true,
+backgroundColor: Colors.black,
+bottomNavigationBar: BottomAppBar(
+color: Colors.black,
+child:
+  BottomNavigationBar(
+    backgroundColor: Colors.black,
+onTap: (value) {
+
+},
+items: [
+
+],
+  ),
+),
     );
   }
 }
