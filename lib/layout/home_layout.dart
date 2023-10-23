@@ -13,6 +13,12 @@ class HomeLayout extends StatelessWidget {
       body: FutureBuilder(
         future: ApiManager.getPopular(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.amber,
+            ));
+          }
           if (snapshot.hasError) {
             return const Center(
                 child: Text(
@@ -20,12 +26,7 @@ class HomeLayout extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ));
           }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: Colors.amber,
-            ));
-          }
+
           var movies = snapshot.data?.results ?? [];
           return ListView.builder(
             itemBuilder: (context, index) {

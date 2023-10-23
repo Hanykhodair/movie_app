@@ -24,11 +24,11 @@ class PopularResponse {
     success = json["success"];
   }
 
-  int? page;
+  num? page;
   List<Results>? results;
-  int? totalPages;
-  int? totalResults;
-  int? status_code;
+  num? totalPages;
+  num? totalResults;
+  num? status_code;
   String? status_message;
   bool? success;
 
@@ -85,17 +85,17 @@ class Results {
   bool? adult;
   String? backdropPath;
   List<int>? genreIds;
-  int? id;
+  num? id;
   String? originalLanguage;
   String? originalTitle;
   String? overview;
-  double? popularity;
+  num? popularity;
   String? posterPath;
   String? releaseDate;
   String? title;
   bool? video;
-  double? voteAverage;
-  int? voteCount;
+  num? voteAverage;
+  num? voteCount;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

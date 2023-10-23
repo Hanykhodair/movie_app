@@ -8,15 +8,21 @@ import '../../../models/PopularResponse.dart';
 import '../../../models/UpcomingResponse.dart';
 
 import '../../../models/TopRatedResponse.dart';
-// https://api.themoviedb.org/3/movie/top_rated?api_key=948e93635e8b4138371ce174e1542fb7
+
 class ApiManager {
-  static Future<PopularResponse> getPopular() async {
-    Uri url = Uri.parse(
-        "https://api.themoviedb.org/3/movie/popular?api_key=948e93635e8b4138371ce174e1542fb7");
-    http.Response response = await http.get(url);
-    var jsonData = jsonDecode(response.body);
-    PopularResponse popularResponse = PopularResponse.fromJson(jsonData);
-    return popularResponse;
+  static Future<PopularResponse?> getPopular() async {
+    try {
+      Uri url = Uri.parse(
+          "https://api.themoviedb.org/3/movie/popular?api_key=948e93635e8b4138371ce174e1542fb7");
+      http.Response response = await http.get(url);
+      var jsonData = jsonDecode(response.body);
+      PopularResponse popularResponse = PopularResponse.fromJson(jsonData);
+      print(popularResponse);
+      return popularResponse;
+    }catch(e)
+    {
+      print(e.toString());
+    }
   }
 
   static Future<UpcomingResponse> getUpcoming() async {
@@ -36,25 +42,31 @@ class ApiManager {
     TopRatedResponse topRatedResponse = TopRatedResponse.fromJson(jsonData);
     return topRatedResponse;
   }
-  static Future<DetailsResponse> getDetails(String movieId)async{
-    Uri url =Uri.parse("https://api.themoviedb.org/3/movie/$movieId?api_key=948e93635e8b4138371ce174e1542fb7");
-    http.Response response=await http.get(url);
-    var jsonData=jsonDecode(response.body);
-    DetailsResponse detailsResponse=DetailsResponse.fromJson(jsonData);
+
+  static Future<DetailsResponse> getDetails(String movieId) async {
+    Uri url = Uri.parse(
+        "https://api.themoviedb.org/3/movie/$movieId?api_key=948e93635e8b4138371ce174e1542fb7");
+    http.Response response = await http.get(url);
+    var jsonData = jsonDecode(response.body);
+    DetailsResponse detailsResponse = DetailsResponse.fromJson(jsonData);
     return detailsResponse;
   }
-  static Future<SimilarResponse> getSimilar(String movieId)async{
-    Uri url =Uri.parse("https://api.themoviedb.org/3/movie/$movieId/similar?api_key=948e93635e8b4138371ce174e1542fb7");
-    http.Response response=await http.get(url);
-    var jsonData=jsonDecode(response.body);
-    SimilarResponse similarResponse=SimilarResponse.fromJson(jsonData);
+
+  static Future<SimilarResponse> getSimilar(String movieId) async {
+    Uri url = Uri.parse(
+        "https://api.themoviedb.org/3/movie/$movieId/similar?api_key=948e93635e8b4138371ce174e1542fb7");
+    http.Response response = await http.get(url);
+    var jsonData = jsonDecode(response.body);
+    SimilarResponse similarResponse = SimilarResponse.fromJson(jsonData);
     return similarResponse;
   }
-  static Future<SearchResponse> getMovie(String movieTitle)async{
-    Uri url =Uri.parse("https://api.themoviedb.org/3/search/movie?api_key=948e93635e8b4138371ce174e1542fb7&query=$movieTitle");
-    http.Response response=await http.get(url);
-    var jsonData=jsonDecode(response.body);
-    SearchResponse searchResponse=SearchResponse.fromJson(jsonData);
+
+  static Future<SearchResponse> getMovie(String movieTitle) async {
+    Uri url = Uri.parse(
+        "https://api.themoviedb.org/3/search/movie?api_key=948e93635e8b4138371ce174e1542fb7&query=$movieTitle");
+    http.Response response = await http.get(url);
+    var jsonData = jsonDecode(response.body);
+    SearchResponse searchResponse = SearchResponse.fromJson(jsonData);
     return searchResponse;
   }
 }

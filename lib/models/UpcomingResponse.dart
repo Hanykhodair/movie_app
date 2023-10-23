@@ -1,13 +1,14 @@
 class UpcomingResponse {
   UpcomingResponse({
-      this.dates, 
-      this.page, 
-      this.results,
+    this.dates,
+    this.page,
+    this.results,
     this.status_code,
     this.status_message,
     this.success,
-      this.totalPages, 
-      this.totalResults,});
+    this.totalPages,
+    this.totalResults,
+  });
 
   UpcomingResponse.fromJson(dynamic json) {
     dates = json['dates'] != null ? Dates.fromJson(json['dates']) : null;
@@ -24,12 +25,13 @@ class UpcomingResponse {
     status_message = json["status_message"];
     success = json["success"];
   }
+
   Dates? dates;
-  int? page;
+  num? page;
   List<Results>? results;
-  int? totalPages;
-  int? totalResults;
-  int? status_code;
+  num? totalPages;
+  num? totalResults;
+  num? status_code;
   String? status_message;
   bool? success;
 
@@ -49,25 +51,25 @@ class UpcomingResponse {
     map["success"] = success;
     return map;
   }
-
 }
 
 class Results {
   Results({
-      this.adult, 
-      this.backdropPath, 
-      this.genreIds, 
-      this.id, 
-      this.originalLanguage, 
-      this.originalTitle, 
-      this.overview, 
-      this.popularity, 
-      this.posterPath, 
-      this.releaseDate, 
-      this.title, 
-      this.video, 
-      this.voteAverage, 
-      this.voteCount,});
+    this.adult,
+    this.backdropPath,
+    this.genreIds,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.releaseDate,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
+  });
 
   Results.fromJson(dynamic json) {
     adult = json['adult'];
@@ -85,20 +87,21 @@ class Results {
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
   }
+
   bool? adult;
   String? backdropPath;
   List<int>? genreIds;
-  int? id;
+  num? id;
   String? originalLanguage;
   String? originalTitle;
   String? overview;
-  double? popularity;
+  num? popularity;
   String? posterPath;
   String? releaseDate;
   String? title;
   bool? video;
-  double? voteAverage;
-  int? voteCount;
+  num? voteAverage;
+  num? voteCount;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -118,18 +121,19 @@ class Results {
     map['vote_count'] = voteCount;
     return map;
   }
-
 }
 
 class Dates {
   Dates({
-      this.maximum, 
-      this.minimum,});
+    this.maximum,
+    this.minimum,
+  });
 
   Dates.fromJson(dynamic json) {
     maximum = json['maximum'];
     minimum = json['minimum'];
   }
+
   String? maximum;
   String? minimum;
 
@@ -139,5 +143,4 @@ class Dates {
     map['minimum'] = minimum;
     return map;
   }
-
 }
