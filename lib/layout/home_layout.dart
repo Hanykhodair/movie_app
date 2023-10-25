@@ -8,39 +8,6 @@ class HomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    <<<<<<< developer
-    appBar: AppBar(),
-    backgroundColor: black,
-    body: FutureBuilder(
-    future: ApiManager.getPopular(),
-    builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return const Center(
-    child: CircularProgressIndicator(
-    color: Colors.amber,
-    ));
-    }
-    if (snapshot.hasError) {
-    return const Center(
-    child: Text(
-    "error",
-    style: TextStyle(color: Colors.white),
-    ));
-    }
-
-    var movies = snapshot.data?.results ?? [];
-    return ListView.builder(
-    itemBuilder: (context, index) {
-    return Text(
-    movies[index].title ?? "",
-    style: const TextStyle(color: Colors.white),
-    );
-    },
-    itemCount: movies.length,
-    );
-    },
-    ),
-    =======
     extendBody: true,
     backgroundColor: Colors.black,
     bottomNavigationBar: BottomAppBar(
@@ -56,7 +23,7 @@ class HomeLayout extends StatelessWidget {
     ],
     ),
     ),
-    >>>>>>> master
+ 
     );
   }
 }
