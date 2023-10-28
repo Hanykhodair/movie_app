@@ -19,7 +19,7 @@ class _HomeTabState extends State<HomeTab> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          flex: 4,
+          flex: 6,
           child: FutureBuilder(
               future: ApiManager.getPopular(),
               builder: (context, snapshot) {
@@ -112,136 +112,154 @@ class _HomeTabState extends State<HomeTab> {
               }),
         ),
         const SizedBox(height: 20),
-        const Padding(
-          padding: EdgeInsets.only(left: 27.0),
-          child: Text("New Releases",
-              style: TextStyle(color: Colors.white, fontSize: 15)),
+        Container(
+          width: double.infinity,
+          color: AppColors.appBarBlack,
+          child: const Padding(
+            padding: EdgeInsets.only(left: 27.0),
+            child: Text("New Releases",
+                style: TextStyle(color: Colors.white, fontSize: 15)),
+          ),
         ),
-        const SizedBox(height: 13),
+        Container(color: AppColors.appBarBlack, height: 7),
         Expanded(
-          flex: 3,
-          child: FutureBuilder(
-            future: ApiManager.getUpcoming(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.data?.success == false) {
-                return const Center(child: Text("error happened"));
-              }
-              var resultsList = snapshot.data?.results ?? [];
-              return Padding(
-                padding: const EdgeInsets.only(left: 27),
-                child: GridView.builder(
-                  itemCount: resultsList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Stack(
-                      // alignment: Alignment.topLeft,
-                      children: [
-                        Image.network(
-                          "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                          // height: 199,
-                          // width: 129,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        isAddedToWatchList
-                            ? const Icon(
-                                Icons.bookmark_added,
-                                color: AppColors.yellowColor,
-                                size: 36,
-                              )
-                            : const Icon(
-                                Icons.bookmark_add_rounded,
-                                color: Colors.grey,
-                                size: 36,
+          flex: 4,
+          child: Container(
+            color: AppColors.appBarBlack,
+            child: FutureBuilder(
+              future: ApiManager.getUpcoming(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.data?.success == false) {
+                  return const Center(child: Text("error happened"));
+                }
+                var resultsList = snapshot.data?.results ?? [];
+                return Padding(
+                  padding: const EdgeInsets.only(left: 27),
+                  child: GridView.builder(
+                    itemCount: resultsList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Stack(
+                        // alignment: Alignment.topLeft,
+                        children: [
+                          Image.network(
+                            "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                            // height: 199,
+                            // width: 129,
+                            fit: BoxFit.fitWidth,
+                          ),
+                          isAddedToWatchList
+                              ? const Icon(
+                                  Icons.bookmark_added,
+                                  color: AppColors.yellowColor,
+                                  size: 36,
+                                )
+                              : const Icon(
+                                  Icons.bookmark_add_rounded,
+                                  color: Colors.grey,
+                                  size: 36,
+                                ),
+                        ],
+                      );
+                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 127,
+                            crossAxisCount: 1,
+                            childAspectRatio: 100 / 127,
+                            mainAxisSpacing: 15),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        const SizedBox(height: 15),
+        Container(
+          color: AppColors.appBarBlack,
+          width: double.infinity,
+          child: const Padding(
+            padding: EdgeInsets.only(left: 27.0),
+            child: Text("Top Rated",
+                style: TextStyle(color: Colors.white, fontSize: 15)),
+          ),
+        ),
+        Container(color: AppColors.appBarBlack, height: 7),
+        Expanded(
+          flex: 6,
+          child: Container(
+            color: AppColors.appBarBlack,
+            child: FutureBuilder(
+              future: ApiManager.getTopRated(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.data?.success == false) {
+                  return const Center(child: Text("error happened"));
+                }
+                var resultsList = snapshot.data?.results ?? [];
+                return Padding(
+                  padding: const EdgeInsets.only(left: 27),
+                  child: GridView.builder(
+                    itemCount: resultsList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Stack(
+                            // alignment: Alignment.topLeft,
+                            children: [
+                              Image.network(
+                                "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                                // height: 199,
+                                // width: 129,
+                                fit: BoxFit.fitHeight,
                               ),
-                      ],
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 127,
-                      crossAxisCount: 1,
-                      childAspectRatio: 100 / 127,
-                      mainAxisSpacing: 15),
-                ),
-              );
-            },
+                              isAddedToWatchList
+                                  ? const Icon(
+                                      Icons.bookmark_added,
+                                      color: AppColors.yellowColor,
+                                      size: 36,
+                                    )
+                                  : const Icon(
+                                      Icons.bookmark_add_rounded,
+                                      color: Colors.grey,
+                                      size: 36,
+                                    ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Icon(Icons.star,
+                                  color: AppColors.yellowColor),
+                              const SizedBox(width: 4),
+                              Text(resultsList[index].voteAverage.toString(),
+                                  style: const TextStyle(color: Colors.white))
+                            ],
+                          ),
+                          Text(resultsList[index].title ?? "",
+                              style: const TextStyle(color: Colors.white)),
+                          Text(
+                              resultsList[index].releaseDate?.substring(0, 4) ??
+                                  "",
+                              style: const TextStyle(color: Colors.white)),
+                        ],
+                      );
+                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 127,
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 15),
+                  ),
+                );
+              },
+            ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(left: 27.0),
-          child: Text("Top Rated",
-              style: TextStyle(color: Colors.white, fontSize: 15)),
-        ),
-        const SizedBox(height: 13),
-        Expanded(
-          flex: 5,
-          child: FutureBuilder(
-            future: ApiManager.getTopRated(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.data?.success == false) {
-                return const Center(child: Text("error happened"));
-              }
-              var resultsList = snapshot.data?.results ?? [];
-              return Padding(
-                padding: const EdgeInsets.only(left: 27),
-                child: GridView.builder(
-                  itemCount: resultsList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Stack(
-                          // alignment: Alignment.topLeft,
-                          children: [
-                            Image.network(
-                              "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                              // height: 199,
-                              // width: 129,
-                              fit: BoxFit.fitWidth,
-                            ),
-                            isAddedToWatchList
-                                ? const Icon(
-                                    Icons.bookmark_added,
-                                    color: AppColors.yellowColor,
-                                    size: 36,
-                                  )
-                                : const Icon(
-                                    Icons.bookmark_add_rounded,
-                                    color: Colors.grey,
-                                    size: 36,
-                                  ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Icon(Icons.star,
-                                color: AppColors.yellowColor),
-                            const SizedBox(width: 4),
-                            Text(resultsList[index].voteAverage.toString(),
-                                style: const TextStyle(color: Colors.white))
-                          ],
-                        ),
-                        Text(resultsList[index].title ?? "",
-                            style: const TextStyle(color: Colors.white)),
-                        Text(
-                            resultsList[index].releaseDate?.substring(0, 4) ??
-                                "",
-                            style: const TextStyle(color: Colors.white)),
-                      ],
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 127,
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 15),
-                ),
-              );
-            },
-          ),
-        ),
+        Expanded(flex: 2, child: Container())
       ],
     );
   }
