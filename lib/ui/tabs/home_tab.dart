@@ -15,6 +15,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FutureBuilder(
             future: ApiManager.getPopular(),
@@ -74,7 +75,13 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               );
             }),
-        const Text("New Releases"),
+        const SizedBox(height: 20),
+        const Padding(
+          padding: EdgeInsets.only(left: 27.0),
+          child: Text("New Releases",
+              style: TextStyle(color: Colors.white, fontSize: 15)),
+        ),
+        const SizedBox(height: 13),
         FutureBuilder(
           future: ApiManager.getUpcoming(),
           builder: (context, snapshot) {
@@ -85,17 +92,20 @@ class _HomeTabState extends State<HomeTab> {
             }
             var resultsList = snapshot.data?.results ?? [];
             return Expanded(
-              child: GridView.builder(
-                itemCount: resultsList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return ImageNetwork(
-                      resultsList[index].posterPath ?? "", true);
-                },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisExtent: 127,
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 15),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 27),
+                child: GridView.builder(
+                  itemCount: resultsList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return ImageNetwork(
+                        resultsList[index].posterPath ?? "", true);
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: 127,
+                      crossAxisCount: 1,
+                      mainAxisSpacing: 15),
+                ),
               ),
             );
           },
