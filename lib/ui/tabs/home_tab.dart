@@ -86,7 +86,8 @@ class _HomeTabState extends State<HomeTab> {
             }
             var resultsList = snapshot.data?.results ?? [];
             return Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
+                itemCount: resultsList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Container(
@@ -99,6 +100,10 @@ class _HomeTabState extends State<HomeTab> {
                     )),
                   );
                 },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisExtent: 127,
+                    crossAxisCount: 1,
+                    mainAxisSpacing: 15),
               ),
             );
           },
