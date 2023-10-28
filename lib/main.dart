@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/layout/home_layout.dart';
 import 'package:movie_app/ui/screens/full_movie_screen.dart';
 
+import 'layout/home_layout.dart';
+
 void main() {
   runApp(const MyApp());
 }

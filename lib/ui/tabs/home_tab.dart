@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
-import 'package:movie_app/ui/screens/full_movie_screen.dart';
 import '../../shard/style/colors.dart';
 
 class HomeTab extends StatefulWidget {
@@ -49,19 +48,11 @@ class _HomeTabState extends State<HomeTab> {
                             Stack(
                               // alignment: Alignment.topLeft,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      FullMovieScreen.routeName,
-                                      arguments: resultsList[index],
-                                    );
-                                  },
-                                  child: Image.network(
-                                    "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                                    height: 199,
-                                    width: 129,
-                                    fit: BoxFit.fitWidth,
-                                  ),
+                                Image.network(
+                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                                  height: 199,
+                                  width: 129,
+                                  fit: BoxFit.fitWidth,
                                 ),
                                 isAddedToWatchList
                                     ? const Icon(
@@ -153,19 +144,11 @@ class _HomeTabState extends State<HomeTab> {
                       return Stack(
                         // alignment: Alignment.topLeft,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                FullMovieScreen.routeName,
-                                arguments: resultsList[index],
-                              );
-                            },
-                            child: Image.network(
-                              "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                              // height: 199,
-                              // width: 129,
-                              fit: BoxFit.fitWidth,
-                            ),
+                          Image.network(
+                            "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                            // height: 199,
+                            // width: 129,
+                            fit: BoxFit.fitWidth,
                           ),
                           isAddedToWatchList
                               ? const Icon(
@@ -225,35 +208,29 @@ class _HomeTabState extends State<HomeTab> {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
-                          Stack(
-                            // alignment: Alignment.topLeft,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    FullMovieScreen.routeName,
-                                    arguments: resultsList[index],
-                                  );
-                                },
-                                child: Image.network(
+                          Expanded(
+                            child: Stack(
+                              // alignment: Alignment.topLeft,
+                              children: [
+                                Image.network(
                                   "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
                                   // height: 199,
                                   // width: 129,
                                   fit: BoxFit.fitHeight,
                                 ),
-                              ),
-                              isAddedToWatchList
-                                  ? const Icon(
-                                      Icons.bookmark_added,
-                                      color: AppColors.yellowColor,
-                                      size: 36,
-                                    )
-                                  : const Icon(
-                                      Icons.bookmark_add_rounded,
-                                      color: Colors.grey,
-                                      size: 36,
-                                    ),
-                            ],
+                                isAddedToWatchList
+                                    ? const Icon(
+                                        Icons.bookmark_added,
+                                        color: AppColors.yellowColor,
+                                        size: 36,
+                                      )
+                                    : const Icon(
+                                        Icons.bookmark_add_rounded,
+                                        color: Colors.grey,
+                                        size: 36,
+                                      ),
+                              ],
+                            ),
                           ),
                           Row(
                             children: [
