@@ -27,7 +27,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       const WatchListTab()
     ];
     return Scaffold(
-        body: tabs[index],
+        body: SafeArea(child: tabs[index]),
         extendBody: true,
         backgroundColor: Colors.black,
         bottomNavigationBar: Theme(
