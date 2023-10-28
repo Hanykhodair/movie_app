@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import '../../video_player.dart';
+import '../widgets/network_image.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -28,22 +29,20 @@ class _HomeTabState extends State<HomeTab> {
                 itemCount: resultsList.length,
                 itemBuilder: (context, index, realIndex) {
                   return Container(
-                    width: double.infinity,
+                    width: MediaQuery.of(context).size.width * 0.99,
                     height: double.infinity,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(
                                 "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}"),
-                            fit: BoxFit.fill)),
+                            fit: BoxFit.cover)),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           // const VideoPlayerScreen(),
-                          Image.network(
-                              "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                              width: 129,
-                              height: 199),
+                          ImageNetwork(
+                              resultsList[index].posterPath ?? "", false),
                           Text(
                             resultsList[index].title ?? "",
                             style: const TextStyle(
@@ -58,8 +57,8 @@ class _HomeTabState extends State<HomeTab> {
                   );
                 },
                 options: CarouselOptions(
-                  scrollPhysics: const AlwaysScrollableScrollPhysics(),
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  scrollPhysics: const FixedExtentScrollPhysics(),
+                  height: MediaQuery.of(context).size.height * 0.33,
                   aspectRatio: 16 / 9,
                   viewportFraction: 0.8,
                   initialPage: 0,
@@ -90,15 +89,8 @@ class _HomeTabState extends State<HomeTab> {
                 itemCount: resultsList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Container(
-                    width: 97,
-                    height: 127,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: NetworkImage(
-                          "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}"),
-                    )),
-                  );
+                  return ImageNetwork(
+                      resultsList[index].posterPath ?? "", true);
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisExtent: 127,
@@ -107,7 +99,7 @@ class _HomeTabState extends State<HomeTab> {
               ),
             );
           },
-        )
+        ),
       ],
     );
   }
