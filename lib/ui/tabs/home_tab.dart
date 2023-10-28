@@ -37,23 +37,34 @@ class _HomeTabState extends State<HomeTab> {
                             image: NetworkImage(
                                 "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}"),
                             fit: BoxFit.cover)),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           // const VideoPlayerScreen(),
                           ImageNetwork(
                               resultsList[index].posterPath ?? "", false),
-                          Text(
-                            resultsList[index].title ?? "",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 14),
-                          ),
-                          Text(
-                            resultsList[index].releaseDate ?? "",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 14),
-                          ),
+                          Flexible(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  resultsList[index].title ?? "",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  resultsList[index].releaseDate ?? "",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                         ]),
                   );
                 },
