@@ -20,7 +20,7 @@ class ResultWidget extends StatelessWidget {
           width: 140,
           placeholder: (context, url) =>
               const Center(child: CircularProgressIndicator(color: AppColors.yellowColor,)),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+          errorWidget: (context, url, error) => const Icon(Icons.error,color: AppColors.yellowColor,),
         ),
         const SizedBox(
           width: 15,
