@@ -1,38 +1,41 @@
 class DetailsResponse {
   DetailsResponse({
-      this.adult, 
-      this.backdropPath, 
-      this.belongsToCollection, 
-      this.budget, 
-      this.genres, 
-      this.homepage, 
-      this.id, 
-      this.imdbId, 
-      this.originalLanguage, 
-      this.originalTitle, 
-      this.overview, 
-      this.popularity, 
-      this.posterPath, 
-      this.productionCompanies, 
-      this.productionCountries, 
-      this.releaseDate, 
-      this.revenue, 
-      this.runtime, 
-      this.spokenLanguages, 
-      this.status, 
-      this.tagline, 
-      this.title, 
-      this.video, 
-      this.voteAverage,
+    this.adult,
+    this.backdropPath,
+    this.belongsToCollection,
+    this.budget,
+    this.genres,
+    this.homepage,
+    this.id,
+    this.imdbId,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.productionCompanies,
+    this.productionCountries,
+    this.releaseDate,
+    this.revenue,
+    this.runtime,
+    this.spokenLanguages,
+    this.status,
+    this.tagline,
+    this.title,
+    this.video,
+    this.voteAverage,
     this.status_code,
     this.status_message,
     this.success,
-      this.voteCount,});
+    this.voteCount,
+  });
 
   DetailsResponse.fromJson(dynamic json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
-    belongsToCollection = json['belongs_to_collection'] != null ? BelongsToCollection.fromJson(json['belongs_to_collection']) : null;
+    belongsToCollection = json['belongs_to_collection'] != null
+        ? BelongsToCollection.fromJson(json['belongs_to_collection'])
+        : null;
     budget = json['budget'];
     if (json['genres'] != null) {
       genres = [];
@@ -79,34 +82,36 @@ class DetailsResponse {
     status_message = json["status_message"];
     success = json["success"];
   }
+
   bool? adult;
   String? backdropPath;
   BelongsToCollection? belongsToCollection;
-  int? budget;
+  num? budget;
   List<Genres>? genres;
   String? homepage;
-  int? id;
+  num? id;
   String? imdbId;
   String? originalLanguage;
   String? originalTitle;
   String? overview;
-  double? popularity;
+  num? popularity;
   String? posterPath;
   List<ProductionCompanies>? productionCompanies;
   List<ProductionCountries>? productionCountries;
   String? releaseDate;
-  int? revenue;
+  num? revenue;
   int? runtime;
   List<SpokenLanguages>? spokenLanguages;
   String? status;
   String? tagline;
   String? title;
   bool? video;
-  double? voteAverage;
-  int? voteCount;
-  int? status_code;
+  num? voteAverage;
+  num? voteCount;
+  num? status_code;
   String? status_message;
   bool? success;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['adult'] = adult;
@@ -127,16 +132,19 @@ class DetailsResponse {
     map['popularity'] = popularity;
     map['poster_path'] = posterPath;
     if (productionCompanies != null) {
-      map['production_companies'] = productionCompanies?.map((v) => v.toJson()).toList();
+      map['production_companies'] =
+          productionCompanies?.map((v) => v.toJson()).toList();
     }
     if (productionCountries != null) {
-      map['production_countries'] = productionCountries?.map((v) => v.toJson()).toList();
+      map['production_countries'] =
+          productionCountries?.map((v) => v.toJson()).toList();
     }
     map['release_date'] = releaseDate;
     map['revenue'] = revenue;
     map['runtime'] = runtime;
     if (spokenLanguages != null) {
-      map['spoken_languages'] = spokenLanguages?.map((v) => v.toJson()).toList();
+      map['spoken_languages'] =
+          spokenLanguages?.map((v) => v.toJson()).toList();
     }
     map['status'] = status;
     map['tagline'] = tagline;
@@ -149,20 +157,21 @@ class DetailsResponse {
     map["success"] = success;
     return map;
   }
-
 }
 
 class SpokenLanguages {
   SpokenLanguages({
-      this.englishName, 
-      this.iso6391, 
-      this.name,});
+    this.englishName,
+    this.iso6391,
+    this.name,
+  });
 
   SpokenLanguages.fromJson(dynamic json) {
     englishName = json['english_name'];
     iso6391 = json['iso_639_1'];
     name = json['name'];
   }
+
   String? englishName;
   String? iso6391;
   String? name;
@@ -174,18 +183,19 @@ class SpokenLanguages {
     map['name'] = name;
     return map;
   }
-
 }
 
 class ProductionCountries {
   ProductionCountries({
-      this.iso31661, 
-      this.name,});
+    this.iso31661,
+    this.name,
+  });
 
   ProductionCountries.fromJson(dynamic json) {
     iso31661 = json['iso_3166_1'];
     name = json['name'];
   }
+
   String? iso31661;
   String? name;
 
@@ -195,15 +205,15 @@ class ProductionCountries {
     map['name'] = name;
     return map;
   }
-
 }
 
 class ProductionCompanies {
   ProductionCompanies({
-      this.id, 
-      this.logoPath, 
-      this.name, 
-      this.originCountry,});
+    this.id,
+    this.logoPath,
+    this.name,
+    this.originCountry,
+  });
 
   ProductionCompanies.fromJson(dynamic json) {
     id = json['id'];
@@ -211,6 +221,7 @@ class ProductionCompanies {
     name = json['name'];
     originCountry = json['origin_country'];
   }
+
   int? id;
   String? logoPath;
   String? name;
@@ -224,18 +235,19 @@ class ProductionCompanies {
     map['origin_country'] = originCountry;
     return map;
   }
-
 }
 
 class Genres {
   Genres({
-      this.id, 
-      this.name,});
+    this.id,
+    this.name,
+  });
 
   Genres.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
   }
+
   int? id;
   String? name;
 
@@ -245,15 +257,15 @@ class Genres {
     map['name'] = name;
     return map;
   }
-
 }
 
 class BelongsToCollection {
   BelongsToCollection({
-      this.id, 
-      this.name, 
-      this.posterPath, 
-      this.backdropPath,});
+    this.id,
+    this.name,
+    this.posterPath,
+    this.backdropPath,
+  });
 
   BelongsToCollection.fromJson(dynamic json) {
     id = json['id'];
@@ -261,6 +273,7 @@ class BelongsToCollection {
     posterPath = json['poster_path'];
     backdropPath = json['backdrop_path'];
   }
+
   int? id;
   String? name;
   String? posterPath;
@@ -274,5 +287,4 @@ class BelongsToCollection {
     map['backdrop_path'] = backdropPath;
     return map;
   }
-
 }

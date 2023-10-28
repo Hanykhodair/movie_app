@@ -26,11 +26,11 @@ class SimilarResponse {
     success = json["success"];
   }
 
-  int? page;
+  num? page;
   List<Results>? results;
-  int? totalPages;
-  int? totalResults;
-  int? status_code;
+  num? totalPages;
+  num? totalResults;
+  num? status_code;
   String? status_message;
   bool? success;
 
