@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/layout/home_layout.dart';
+import 'package:movie_app/ui/screens/full_movie_screen.dart';
+
+import 'layout/home_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +18,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: HomeLayout.routeName,
         routes: {
-        HomeLayout.routeName:(context)=> HomeLayout(),
+          HomeLayout.routeName: (context) => const HomeLayout(),
+          FullMovieScreen.routeName: (context) => FullMovieScreen(),
         });
   }
 }
-
