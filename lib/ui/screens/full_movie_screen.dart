@@ -251,7 +251,7 @@ class FullMovieScreen extends StatelessWidget {
                                       Text(
                                           resultsList[index]
                                                   .releaseDate
-                                                  ?.substring(0, 4) ??
+                                                   ??
                                               "",
                                           style: const TextStyle(
                                               color: Colors.white)),
