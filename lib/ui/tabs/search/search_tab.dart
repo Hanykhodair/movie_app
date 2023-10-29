@@ -17,11 +17,16 @@ class _SearchTabState extends State<SearchTab> {
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
       child: Column(
         children: [
           TextFormField(
+            textInputAction: TextInputAction.search,
+            autofocus: true,
+            onFieldSubmitted: (value) {
+              setState(() {});
+            },
             style: const TextStyle(color: Colors.white),
             controller: searchController,
             cursorColor: Colors.white,
@@ -48,7 +53,7 @@ class _SearchTabState extends State<SearchTab> {
                   borderSide: const BorderSide(color: Colors.white, width: .5)),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Expanded(
@@ -78,7 +83,8 @@ class _SearchTabState extends State<SearchTab> {
                 return Image.asset("assets/images/movie_icon.png");
               }
               return ListView.separated(
-                separatorBuilder: (context, index) => Divider(color: Colors.white.withOpacity(.5)),
+                separatorBuilder: (context, index) =>
+                    Divider(color: Colors.white.withOpacity(.5)),
                 itemCount: searchResult.length,
                 itemBuilder: (context, index) {
                   return ResultWidget(searchResult[index]);
