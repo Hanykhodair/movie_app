@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
 import '../../models/Results.dart';
@@ -35,7 +36,7 @@ class FullMovieScreen extends StatelessWidget {
           return Column(
             children: [
               SizedBox(
-                height: 180,
+                height: 180.h,
                 width: double.infinity,
                 child: CachedNetworkImage(
                   imageUrl:
@@ -51,7 +52,7 @@ class FullMovieScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+               SizedBox(height: 15.h),
               Padding(
                 padding: const EdgeInsets.only(left: 22),
                 child: Column(
@@ -70,7 +71,7 @@ class FullMovieScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                     SizedBox(height: 10.h),
                     Text(resultMovie?.releaseDate?.substring(0, 4) ?? "",
                         textAlign: TextAlign.start,
                         style:
@@ -78,7 +79,7 @@ class FullMovieScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
+               SizedBox(height: 25.h),
               Padding(
                 padding: const EdgeInsets.only(left: 22),
                 child: Row(
@@ -86,8 +87,8 @@ class FullMovieScreen extends StatelessWidget {
                     Stack(
                       children: [
                         SizedBox(
-                          height: 199,
-                          width: 129,
+                          height: 199.h,
+                          width: 129.w,
                           child: CachedNetworkImage(
                             imageUrl:
                                 "https://image.tmdb.org/t/p/w500/${resultMovie?.posterPath ?? ""}",
@@ -150,7 +151,7 @@ class FullMovieScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 15),
+               SizedBox(height: 15.h),
               Expanded(
                 child: Container(
                   color: AppColors.appBarBlack,
@@ -173,7 +174,7 @@ class FullMovieScreen extends StatelessWidget {
                                     color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 15),
+                             SizedBox(height: 15.h),
                             Expanded(
                               child: GridView.builder(
                                 itemCount: resultsList.length,
@@ -181,59 +182,56 @@ class FullMovieScreen extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return Column(
                                     children: [
-                                      Expanded(
-                                        flex: 4,
-                                        child: Stack(
-                                          alignment: Alignment.topLeft,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pushNamed(
-                                                  FullMovieScreen.routeName,
-                                                  arguments: resultsList[index],
-                                                );
-                                              },
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? ""}",
-                                                // height: 89,
-                                                // width: 140,
-                                                fit: BoxFit.cover,
-                                                placeholder: (context, url) =>
-                                                    const Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                  color: AppColors.yellowColor,
-                                                )),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(
-                                                  Icons.error,
-                                                  color: AppColors.yellowColor,
-                                                ),
+                                      Stack(
+                                        alignment: Alignment.topLeft,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pushNamed(
+                                                FullMovieScreen.routeName,
+                                                arguments: resultsList[index],
+                                              );
+                                            },
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? ""}",
+                                              height: 127.74.h,
+                                              width: 96.87.w,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                color: AppColors.yellowColor,
+                                              )),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(
+                                                Icons.error,
+                                                color: AppColors.yellowColor,
                                               ),
                                             ),
-                                            isAddedToWatchList
-                                                ? const Icon(
-                                                    Icons.bookmark_added,
-                                                    color:
-                                                        AppColors.yellowColor,
-                                                    size: 36,
-                                                  )
-                                                : const Icon(
-                                                    Icons.bookmark_add_rounded,
-                                                    color: Colors.grey,
-                                                    size: 36,
-                                                  ),
-                                          ],
-                                        ),
+                                          ),
+                                          isAddedToWatchList
+                                              ? const Icon(
+                                                  Icons.bookmark_added,
+                                                  color:
+                                                      AppColors.yellowColor,
+                                                  size: 36,
+                                                )
+                                              : const Icon(
+                                                  Icons.bookmark_add_rounded,
+                                                  color: Colors.grey,
+                                                  size: 36,
+                                                ),
+                                        ],
                                       ),
                                       Expanded(
                                         child: Row(
                                           children: [
                                             const Icon(Icons.star,
                                                 color: AppColors.yellowColor),
-                                            const SizedBox(width: 4),
+                                             SizedBox(width: 4.w),
                                             Text(
                                                 resultsList[index]
                                                     .voteAverage
