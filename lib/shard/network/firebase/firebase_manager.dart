@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:movie_app/models/movie_model.dart';
 
 class FirebaseManager {
@@ -23,10 +22,7 @@ class FirebaseManager {
   }
 
   static Stream<QuerySnapshot<MovieModel>> getMovie(DateTime date) {
-    return getMovieCollection().where("date",
-        isEqualTo: DateUtils
-            .dateOnly(date)
-            .millisecondsSinceEpoch)
+    return getMovieCollection()
         .snapshots();
   }
 
@@ -39,7 +35,7 @@ class FirebaseManager {
     return getMovieCollection().doc(movie.id).update({
       "title": movie.title,
       "description": movie.description,
-      "date": movie.publishAt
+      "publishAt": movie.publishAt
     });
   }
 
