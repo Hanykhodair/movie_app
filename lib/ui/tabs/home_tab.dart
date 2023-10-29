@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import '../../shard/style/colors.dart';
 
@@ -50,8 +51,8 @@ class _HomeTabState extends State<HomeTab> {
                               children: [
                                 Image.network(
                                   "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                                  height: 199,
-                                  width: 129,
+                                  height: 199.h,
+                                  width: 129.w,
                                   fit: BoxFit.fitWidth,
                                 ),
                                 isAddedToWatchList
@@ -111,7 +112,7 @@ class _HomeTabState extends State<HomeTab> {
                 );
               }),
         ),
-        const SizedBox(height: 20),
+         SizedBox(height: 20.h),
         Container(
           width: double.infinity,
           color: AppColors.appBarBlack,
@@ -121,7 +122,7 @@ class _HomeTabState extends State<HomeTab> {
                 style: TextStyle(color: Colors.white, fontSize: 15)),
           ),
         ),
-        Container(color: AppColors.appBarBlack, height: 7),
+        Container(color: AppColors.appBarBlack, height: 7.h),
         Expanded(
           flex: 4,
           child: Container(
@@ -146,8 +147,8 @@ class _HomeTabState extends State<HomeTab> {
                         children: [
                           Image.network(
                             "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                            // height: 199,
-                            // width: 129,
+                            height: 127.74.h,
+                            width: 96.87.w,
                             fit: BoxFit.fitWidth,
                           ),
                           isAddedToWatchList
@@ -176,7 +177,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
         ),
-        const SizedBox(height: 15),
+         SizedBox(height: 15.h),
         Container(
           color: AppColors.appBarBlack,
           width: double.infinity,
@@ -207,36 +208,35 @@ class _HomeTabState extends State<HomeTab> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Stack(
-                              // alignment: Alignment.topLeft,
-                              children: [
-                                Image.network(
-                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                                  // height: 199,
-                                  // width: 129,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                                isAddedToWatchList
-                                    ? const Icon(
-                                        Icons.bookmark_added,
-                                        color: AppColors.yellowColor,
-                                        size: 36,
-                                      )
-                                    : const Icon(
-                                        Icons.bookmark_add_rounded,
-                                        color: Colors.grey,
-                                        size: 36,
-                                      ),
-                              ],
-                            ),
+                          Stack(
+                            // alignment: Alignment.topLeft,
+                            children: [
+                              Image.network(
+                                "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                                height: 127.74.h,
+                                width: 96.87.w,
+                                fit: BoxFit.cover,
+                              ),
+                              isAddedToWatchList
+                                  ? const Icon(
+                                      Icons.bookmark_added,
+                                      color: AppColors.yellowColor,
+                                      size: 36,
+                                    )
+                                  : const Icon(
+                                      Icons.bookmark_add_rounded,
+                                      color: Colors.grey,
+                                      size: 36,
+                                    ),
+                            ],
                           ),
                           Row(
                             children: [
                               const Icon(Icons.star,
                                   color: AppColors.yellowColor),
-                              const SizedBox(width: 4),
+                               SizedBox(width: 4.w),
                               Text(resultsList[index].voteAverage.toString(),
                                   style: const TextStyle(color: Colors.white))
                             ],
@@ -261,7 +261,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
         ),
-        Expanded(flex: 2, child: Container())
+        // Expanded(flex: 2, child: Container())
       ],
     );
   }
