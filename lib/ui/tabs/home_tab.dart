@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import '../../shard/style/colors.dart';
+import '../screens/full_movie_screen.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -33,63 +35,70 @@ class _HomeTabState extends State<HomeTab> {
                 return CarouselSlider.builder(
                   itemCount: resultsList.length,
                   itemBuilder: (context, index, realIndex) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width * 0.99,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}"),
-                              fit: BoxFit.cover)),
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            // const VideoPlayerScreen(),
-                            Stack(
-                              // alignment: Alignment.topLeft,
-                              children: [
-                                Image.network(
-                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                                  height: 199.h,
-                                  width: 129.w,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                isAddedToWatchList
-                                    ? const Icon(
-                                        Icons.bookmark_added,
-                                        color: AppColors.yellowColor,
-                                        size: 60,
-                                      )
-                                    : const Icon(
-                                        Icons.bookmark_add_rounded,
-                                        color: Colors.grey,
-                                        size: 60,
-                                      ),
-                              ],
-                            ),
-                            Flexible(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                    return Stack(
+                      children: [
+                        CachedNetworkImage(
+                            width: MediaQuery.of(context).size.width,
+                            fit: BoxFit.fitHeight,
+                            imageUrl:
+                                "https://image.tmdb.org/t/p/w500/${resultsList[index].backdropPath}"),
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // const VideoPlayerScreen(),
+                              Stack(
+                                // alignment: Alignment.topLeft,
                                 children: [
-                                  Text(
-                                    resultsList[index].title ?? "",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    resultsList[index].releaseDate ?? "",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                          FullMovieScreen.routeName,
+                                          arguments: resultsList[index],
+                                        );
+                                      },
+                                      child: Image.network(
+                                        "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                                        height: 199.h,
+                                        width: 129.w,
+                                        fit: BoxFit.fitWidth,
+                                      )),
+                                  isAddedToWatchList
+                                      ? const Icon(
+                                          Icons.bookmark_added,
+                                          color: AppColors.yellowColor,
+                                          size: 60,
+                                        )
+                                      : const Icon(
+                                          Icons.bookmark_add_rounded,
+                                          color: Colors.grey,
+                                          size: 60,
+                                        ),
                                 ],
                               ),
-                            )
-                          ]),
+                              Flexible(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      resultsList[index].title ?? "",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Text(
+                                      resultsList[index].releaseDate ?? "",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ]),
+                      ],
                     );
                   },
                   options: CarouselOptions(
@@ -112,7 +121,7 @@ class _HomeTabState extends State<HomeTab> {
                 );
               }),
         ),
-         SizedBox(height: 20.h),
+        SizedBox(height: 20.h),
         Container(
           width: double.infinity,
           color: AppColors.appBarBlack,
@@ -145,12 +154,19 @@ class _HomeTabState extends State<HomeTab> {
                       return Stack(
                         // alignment: Alignment.topLeft,
                         children: [
-                          Image.network(
-                            "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                            height: 127.74.h,
-                            width: 96.87.w,
-                            fit: BoxFit.fitWidth,
-                          ),
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  FullMovieScreen.routeName,
+                                  arguments: resultsList[index],
+                                );
+                              },
+                              child: Image.network(
+                                "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                                // height: 127.74.h,
+                                // width: 96.87.w,
+                                fit: BoxFit.fitWidth,
+                              )),
                           isAddedToWatchList
                               ? const Icon(
                                   Icons.bookmark_added,
@@ -177,7 +193,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
         ),
-         SizedBox(height: 15.h),
+        SizedBox(height: 15.h),
         Container(
           color: AppColors.appBarBlack,
           width: double.infinity,
@@ -213,11 +229,24 @@ class _HomeTabState extends State<HomeTab> {
                           Stack(
                             // alignment: Alignment.topLeft,
                             children: [
-                              Image.network(
-                                "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                                height: 127.74.h,
-                                width: 96.87.w,
-                                fit: BoxFit.cover,
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    FullMovieScreen.routeName,
+                                    arguments: resultsList[index],
+                                  );
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
+                                  // height: 127.74.h,
+                                  // width: 96.87.w,
+                                  placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator(
+                                    color: AppColors.yellowColor,
+                                  )),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                               isAddedToWatchList
                                   ? const Icon(
@@ -236,7 +265,7 @@ class _HomeTabState extends State<HomeTab> {
                             children: [
                               const Icon(Icons.star,
                                   color: AppColors.yellowColor),
-                               SizedBox(width: 4.w),
+                              SizedBox(width: 4.w),
                               Text(resultsList[index].voteAverage.toString(),
                                   style: const TextStyle(color: Colors.white))
                             ],
@@ -261,6 +290,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
           ),
         ),
+        SizedBox(height: 10.h),
         // Expanded(flex: 2, child: Container())
       ],
     );
