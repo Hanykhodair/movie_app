@@ -18,11 +18,12 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> tabs = [
       const HomeTab(),
-       SearchTab(),
+      SearchTab(),
       const BrowseTab(),
       const WatchListTab()
     ];
