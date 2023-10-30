@@ -38,10 +38,15 @@ class _HomeTabState extends State<HomeTab> {
                     return Stack(
                       children: [
                         CachedNetworkImage(
-                            width: MediaQuery.of(context).size.width,
-                            fit: BoxFit.fitHeight,
-                            imageUrl:
-                                "https://image.tmdb.org/t/p/w500/${resultsList[index].backdropPath}"),
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fitHeight,
+                          imageUrl:
+                              "https://image.tmdb.org/t/p/w500/${resultsList[index].backdropPath}",
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.error,
+                            color: AppColors.yellowColor,
+                          ),
+                        ),
                         Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -237,6 +242,12 @@ class _HomeTabState extends State<HomeTab> {
                                   );
                                 },
                                 child: CachedNetworkImage(
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                    Icons.error,
+                                    color: AppColors.yellowColor,
+                                  ),
+
                                   imageUrl:
                                       "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
                                   // height: 127.74.h,
@@ -261,14 +272,16 @@ class _HomeTabState extends State<HomeTab> {
                                     ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              const Icon(Icons.star,
-                                  color: AppColors.yellowColor),
-                              SizedBox(width: 4.w),
-                              Text(resultsList[index].voteAverage.toString(),
-                                  style: const TextStyle(color: Colors.white))
-                            ],
+                          Flexible(
+                            child: Row(
+                              children: [
+                                const Icon(Icons.star,
+                                    color: AppColors.yellowColor),
+                                SizedBox(width: 4.w),
+                                Text(resultsList[index].voteAverage.toString(),
+                                    style: const TextStyle(color: Colors.white))
+                              ],
+                            ),
                           ),
                           Text(resultsList[index].title ?? "",
                               style: const TextStyle(color: Colors.white)),

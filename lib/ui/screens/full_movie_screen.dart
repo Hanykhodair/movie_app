@@ -27,6 +27,8 @@ class FullMovieScreen extends StatelessWidget {
       body: FutureBuilder(
         future: ApiManager.getDetails(id.toString()),
         builder: (context, snapshot) {
+          // print(args.posterPath);
+          // print(args.backdropPath);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.data?.success == false) {
@@ -91,7 +93,7 @@ class FullMovieScreen extends StatelessWidget {
                           width: 129.w,
                           child: CachedNetworkImage(
                             imageUrl:
-                                "https://image.tmdb.org/t/p/w500/${resultMovie?.posterPath ?? ""}",
+                                "https://image.tmdb.org/t/p/w500/${resultMovie?.posterPath}",
                             fit: BoxFit.cover,
                             placeholder: (context, url) => const Center(
                                 child: CircularProgressIndicator(
@@ -158,6 +160,7 @@ class FullMovieScreen extends StatelessWidget {
                   child: FutureBuilder(
                     future: ApiManager.getSimilar(id.toString()),
                     builder: (context, snapshot) {
+                      // print(id);
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.data?.success == false) {
@@ -194,7 +197,7 @@ class FullMovieScreen extends StatelessWidget {
                                             },
                                             child: CachedNetworkImage(
                                               imageUrl:
-                                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? ""}",
+                                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? "kP0OOAa4GTZSUPW8fgPbk1OmKEW.jpg"}",
                                               fit: BoxFit.cover,
                                               placeholder: (context, url) =>
                                                   const Center(
@@ -204,9 +207,11 @@ class FullMovieScreen extends StatelessWidget {
                                               )),
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      const Icon(
-                                                Icons.error,
-                                                color: AppColors.yellowColor,
+                                                      const Center(
+                                                child: Icon(
+                                                  Icons.error,
+                                                  color: AppColors.yellowColor,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -224,6 +229,7 @@ class FullMovieScreen extends StatelessWidget {
                                         ],
                                       ),
                                       Expanded(
+                                        flex: 1,
                                         child: Row(
                                           children: [
                                             const Icon(Icons.star,
