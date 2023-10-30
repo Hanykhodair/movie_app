@@ -74,7 +74,7 @@ class FullMovieScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 10.h),
-                    Text(resultMovie?.releaseDate?.substring(0, 4) ?? "",
+                    Text(resultMovie?.releaseDate ?? "",
                         textAlign: TextAlign.start,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18)),
@@ -184,70 +184,74 @@ class FullMovieScreen extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Stack(
-                                        alignment: Alignment.topLeft,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                FullMovieScreen.routeName,
-                                                arguments: resultsList[index],
-                                              );
-                                            },
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? "kP0OOAa4GTZSUPW8fgPbk1OmKEW.jpg"}",
-                                              fit: BoxFit.cover,
-                                              placeholder: (context, url) =>
-                                                  const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                color: AppColors.yellowColor,
-                                              )),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Center(
-                                                child: Icon(
-                                                  Icons.error,
+                                      Expanded(
+                                        child: Stack(
+                                          alignment: Alignment.topLeft,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).pushNamed(
+                                                  FullMovieScreen.routeName,
+                                                  arguments: resultsList[index],
+                                                );
+                                              },
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? "kP0OOAa4GTZSUPW8fgPbk1OmKEW.jpg"}",
+                                                height: 177.74.h,
+                                                width: 136.87.w,
+                                                fit: BoxFit.fill,
+                                                placeholder: (context, url) =>
+                                                    const Center(
+                                                        child:
+                                                            CircularProgressIndicator(
                                                   color: AppColors.yellowColor,
+                                                )),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Center(
+                                                  child: Icon(
+                                                    Icons.error,
+                                                    color: AppColors.yellowColor,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          isAddedToWatchList
-                                              ? const Icon(
-                                                  Icons.bookmark_added,
-                                                  color: AppColors.yellowColor,
-                                                  size: 36,
-                                                )
-                                              : const Icon(
-                                                  Icons.bookmark_add_rounded,
-                                                  color: Colors.grey,
-                                                  size: 36,
-                                                ),
-                                        ],
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Row(
-                                          children: [
-                                            const Icon(Icons.star,
-                                                color: AppColors.yellowColor),
-                                            SizedBox(width: 4.w),
-                                            Text(
-                                                resultsList[index]
-                                                    .voteAverage
-                                                    .toString(),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: const TextStyle(
-                                                    color: Colors.white))
+                                            isAddedToWatchList
+                                                ? const Icon(
+                                                    Icons.bookmark_added,
+                                                    color: AppColors.yellowColor,
+                                                    size: 36,
+                                                  )
+                                                : const Icon(
+                                                    Icons.bookmark_add_rounded,
+                                                    color: Colors.grey,
+                                                    size: 36,
+                                                  ),
                                           ],
                                         ),
                                       ),
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.star,
+                                              color: AppColors.yellowColor),
+                                          SizedBox(width: 4.w),
+                                          Text(
+                                              resultsList[index]
+                                                  .voteAverage
+                                                  .toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: const TextStyle(
+                                                  color: Colors.white))
+                                        ],
+                                      ),
                                       Text(resultsList[index].title ?? "",
+                                          maxLines:1,
                                           style: const TextStyle(
+                                            overflow: TextOverflow.ellipsis,
                                               color: Colors.white)),
                                       Text(resultsList[index].releaseDate ?? "",
                                           style: const TextStyle(

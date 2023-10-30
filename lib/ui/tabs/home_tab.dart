@@ -250,13 +250,13 @@ class _HomeTabState extends State<HomeTab> {
 
                                   imageUrl:
                                       "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath}",
-                                  // height: 127.74.h,
-                                  // width: 96.87.w,
+                                  height: 177.74.h,
+                                  width: 136.87.w,
+                                  fit: BoxFit.fill,
                                   placeholder: (context, url) => const Center(
                                       child: CircularProgressIndicator(
                                     color: AppColors.yellowColor,
                                   )),
-                                  fit: BoxFit.cover,
                                 ),
                               ),
                               isAddedToWatchList
@@ -283,8 +283,11 @@ class _HomeTabState extends State<HomeTab> {
                               ],
                             ),
                           ),
+                          SizedBox(height: 1.h,),
                           Text(resultsList[index].title ?? "",
-                              style: const TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.white,overflow: TextOverflow.ellipsis),
+                          maxLines: 1,
+                          ),
                           Text(
                               resultsList[index].releaseDate?.substring(0, 4) ??
                                   "",

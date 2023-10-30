@@ -37,7 +37,7 @@ class _SearchTabState extends State<SearchTab> {
                   ? IconButton(
                       icon: const Icon(Icons.cancel),
                       onPressed: () {
-                        searchController.text = "";
+                        searchController.clear();
                         setState(() {});
                       },
                     )

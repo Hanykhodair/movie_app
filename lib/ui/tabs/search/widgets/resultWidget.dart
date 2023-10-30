@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/models/Results.dart';
 import 'package:movie_app/shard/style/colors.dart';
 import 'package:movie_app/ui/screens/full_movie_screen.dart';
@@ -17,12 +18,14 @@ class ResultWidget extends StatelessWidget {
       child: Row(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          result?.posterPath != null
-              ? CachedNetworkImage(
+          // result?.posterPath != null
+          //     ?
+          CachedNetworkImage(
                   imageUrl:
                       "https://image.tmdb.org/t/p/w500/${result?.posterPath}",
-                  height: 89,
-                  width: 140,
+                  height: 89.h,
+                  width: 140.w,
+                   fit: BoxFit.fill,
                   placeholder: (context, url) => const Center(
                       child: CircularProgressIndicator(
                     color: AppColors.yellowColor,
@@ -31,10 +34,10 @@ class ResultWidget extends StatelessWidget {
                     Icons.error,
                     color: AppColors.yellowColor,
                   ),
-                )
-              : const SizedBox(),
-          const SizedBox(
-            width: 15,
+                ),
+              // : const SizedBox(),
+           SizedBox(
+            width: 15.w,
           ),
           Expanded(
             child: Column(
