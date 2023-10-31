@@ -33,6 +33,15 @@ class _SearchTabState extends State<SearchTab> {
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.grey.withOpacity(.35),
+              suffixIcon: searchController.text != ""
+                  ? IconButton(
+                      icon: const Icon(Icons.cancel),
+                      onPressed: () {
+                        searchController.clear();
+                        setState(() {});
+                      },
+                    )
+                  : SizedBox(),
               prefixIcon: IconButton(
                 icon: const Icon(
                   Icons.search,

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
 import '../../models/Results.dart';
@@ -26,6 +27,8 @@ class FullMovieScreen extends StatelessWidget {
       body: FutureBuilder(
         future: ApiManager.getDetails(id.toString()),
         builder: (context, snapshot) {
+          // print(args.posterPath);
+          // print(args.backdropPath);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.data?.success == false) {
@@ -35,7 +38,7 @@ class FullMovieScreen extends StatelessWidget {
           return Column(
             children: [
               SizedBox(
-                height: 180,
+                height: 180.h,
                 width: double.infinity,
                 child: CachedNetworkImage(
                   imageUrl:
@@ -51,7 +54,7 @@ class FullMovieScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: 15.h),
               Padding(
                 padding: const EdgeInsets.only(left: 22),
                 child: Column(
@@ -70,15 +73,15 @@ class FullMovieScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    Text(resultMovie?.releaseDate?.substring(0, 4) ?? "",
+                    SizedBox(height: 10.h),
+                    Text(resultMovie?.releaseDate ?? "",
                         textAlign: TextAlign.start,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18)),
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25.h),
               Padding(
                 padding: const EdgeInsets.only(left: 22),
                 child: Row(
@@ -86,11 +89,11 @@ class FullMovieScreen extends StatelessWidget {
                     Stack(
                       children: [
                         SizedBox(
-                          height: 199,
-                          width: 129,
+                          height: 199.h,
+                          width: 129.w,
                           child: CachedNetworkImage(
                             imageUrl:
-                                "https://image.tmdb.org/t/p/w500/${resultMovie?.posterPath ?? ""}",
+                                "https://image.tmdb.org/t/p/w500/${resultMovie?.posterPath}",
                             fit: BoxFit.cover,
                             placeholder: (context, url) => const Center(
                                 child: CircularProgressIndicator(
@@ -134,12 +137,12 @@ class FullMovieScreen extends StatelessWidget {
                                 const Icon(Icons.star,
                                     color: AppColors.yellowColor),
                                 // const SizedBox(width: 10),
-                                Text(resultMovie!.voteAverage.toString(),
+                                Text(resultMovie?.voteAverage.toString() ?? "",
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 18)),
                                 // const SizedBox(width: 20),
                                 Text(
-                                    "Language: (${resultMovie.originalLanguage})",
+                                    "Language: (${resultMovie?.originalLanguage ?? ""})",
                                     style: const TextStyle(color: Colors.white))
                               ],
                             ),
@@ -150,13 +153,14 @@ class FullMovieScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: 15.h),
               Expanded(
                 child: Container(
                   color: AppColors.appBarBlack,
                   child: FutureBuilder(
                     future: ApiManager.getSimilar(id.toString()),
                     builder: (context, snapshot) {
+                      // print(id);
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.data?.success == false) {
@@ -173,16 +177,16 @@ class FullMovieScreen extends StatelessWidget {
                                     color: Colors.white,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 15),
+                            SizedBox(height: 15.h),
                             Expanded(
                               child: GridView.builder(
                                 itemCount: resultsList.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
-                                        flex: 4,
                                         child: Stack(
                                           alignment: Alignment.topLeft,
                                           children: [
@@ -195,10 +199,10 @@ class FullMovieScreen extends StatelessWidget {
                                               },
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                    "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? ""}",
-                                                // height: 89,
-                                                // width: 140,
-                                                fit: BoxFit.cover,
+                                                    "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? "kP0OOAa4GTZSUPW8fgPbk1OmKEW.jpg"}",
+                                                height: 177.74.h,
+                                                width: 136.87.w,
+                                                fit: BoxFit.fill,
                                                 placeholder: (context, url) =>
                                                     const Center(
                                                         child:
@@ -207,17 +211,18 @@ class FullMovieScreen extends StatelessWidget {
                                                 )),
                                                 errorWidget:
                                                     (context, url, error) =>
-                                                        const Icon(
-                                                  Icons.error,
-                                                  color: AppColors.yellowColor,
+                                                        const Center(
+                                                  child: Icon(
+                                                    Icons.error,
+                                                    color: AppColors.yellowColor,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                             isAddedToWatchList
                                                 ? const Icon(
                                                     Icons.bookmark_added,
-                                                    color:
-                                                        AppColors.yellowColor,
+                                                    color: AppColors.yellowColor,
                                                     size: 36,
                                                   )
                                                 : const Icon(
@@ -228,31 +233,27 @@ class FullMovieScreen extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            const Icon(Icons.star,
-                                                color: AppColors.yellowColor),
-                                            const SizedBox(width: 4),
-                                            Text(
-                                                resultsList[index]
-                                                    .voteAverage
-                                                    .toString(),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: const TextStyle(
-                                                    color: Colors.white))
-                                          ],
-                                        ),
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.star,
+                                              color: AppColors.yellowColor),
+                                          SizedBox(width: 4.w),
+                                          Text(
+                                              resultsList[index]
+                                                  .voteAverage
+                                                  .toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: const TextStyle(
+                                                  color: Colors.white))
+                                        ],
                                       ),
                                       Text(resultsList[index].title ?? "",
+                                          maxLines:1,
                                           style: const TextStyle(
+                                            overflow: TextOverflow.ellipsis,
                                               color: Colors.white)),
-                                      Text(
-                                          resultsList[index]
-                                                  .releaseDate
-                                                   ??
-                                              "",
+                                      Text(resultsList[index].releaseDate ?? "",
                                           style: const TextStyle(
                                               color: Colors.white)),
                                     ],
