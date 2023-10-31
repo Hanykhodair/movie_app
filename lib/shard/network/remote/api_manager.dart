@@ -57,11 +57,17 @@ class ApiManager {
   }
 
   static Future<SearchResponse> getMovie(String movieTitle) async {
-    Uri url = Uri.parse(
-        "https://api.themoviedb.org/3/search/movie?api_key=948e93635e8b4138371ce174e1542fb7&query=$movieTitle");
-    http.Response response = await http.get(url);
-    var jsonData = jsonDecode(response.body);
-    SearchResponse searchResponse = SearchResponse.fromJson(jsonData);
-    return searchResponse;
+    try {
+      Uri url = Uri.parse(
+          "https://api.themoviedb.org/3/search/movie?api_key=948e93635e8b4138371ce174e1542fb7&query=$movieTitle");
+      http.Response response = await http.get(url);
+      var jsonData = jsonDecode(response.body);
+      SearchResponse searchResponse = SearchResponse.fromJson(jsonData);
+      return searchResponse;
+    }
+    catch(e){
+      print(e.toString());
+      throw Exception();
+    }
   }
 }

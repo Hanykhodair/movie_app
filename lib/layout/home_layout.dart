@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
-import 'package:movie_app/ui/tabs/search_tab.dart';
+import 'package:movie_app/ui/tabs/search/search_tab.dart';
 import 'package:movie_app/ui/tabs/watch_list_tab.dart';
 
 import '../ui/tabs/brows_tab.dart';
@@ -18,16 +18,17 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> tabs = [
       const HomeTab(),
-      const SearchTab(),
+      SearchTab(),
       const BrowseTab(),
       const WatchListTab()
     ];
     return Scaffold(
-        body: tabs[index],
+        body: SafeArea(child: tabs[index]),
         extendBody: true,
         backgroundColor: Colors.black,
         bottomNavigationBar: Theme(
