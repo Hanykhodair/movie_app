@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
+import 'package:movie_app/ui/screens/widgets/more_like_this_widget.dart';
 import '../../models/Results.dart';
 
 class FullMovieScreen extends StatelessWidget {
@@ -30,7 +31,10 @@ class FullMovieScreen extends StatelessWidget {
           // print(args.posterPath);
           // print(args.backdropPath);
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: AppColors.yellowColor,
+            ));
           } else if (snapshot.data?.success == false) {
             return const Center(child: Text("error happened"));
           }
@@ -162,113 +166,16 @@ class FullMovieScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       // print(id);
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: AppColors.yellowColor,
+                        ));
                       } else if (snapshot.data?.success == false) {
                         return const Center(child: Text("error happened"));
                       }
                       var resultsList = snapshot.data?.results ?? [];
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 27),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text("More Like This",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold)),
-                            SizedBox(height: 15.h),
-                            Expanded(
-                              child: GridView.builder(
-                                itemCount: resultsList.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Stack(
-                                          alignment: Alignment.topLeft,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pushNamed(
-                                                  FullMovieScreen.routeName,
-                                                  arguments: resultsList[index],
-                                                );
-                                              },
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? "kP0OOAa4GTZSUPW8fgPbk1OmKEW.jpg"}",
-                                                height: 177.74.h,
-                                                width: 136.87.w,
-                                                fit: BoxFit.fill,
-                                                placeholder: (context, url) =>
-                                                    const Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                  color: AppColors.yellowColor,
-                                                )),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Center(
-                                                  child: Icon(
-                                                    Icons.error,
-                                                    color: AppColors.yellowColor,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            isAddedToWatchList
-                                                ? const Icon(
-                                                    Icons.bookmark_added,
-                                                    color: AppColors.yellowColor,
-                                                    size: 36,
-                                                  )
-                                                : const Icon(
-                                                    Icons.bookmark_add_rounded,
-                                                    color: Colors.grey,
-                                                    size: 36,
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.star,
-                                              color: AppColors.yellowColor),
-                                          SizedBox(width: 4.w),
-                                          Text(
-                                              resultsList[index]
-                                                  .voteAverage
-                                                  .toString(),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
-                                              style: const TextStyle(
-                                                  color: Colors.white))
-                                        ],
-                                      ),
-                                      Text(resultsList[index].title ?? "",
-                                          maxLines:1,
-                                          style: const TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                              color: Colors.white)),
-                                      Text(resultsList[index].releaseDate ?? "",
-                                          style: const TextStyle(
-                                              color: Colors.white)),
-                                    ],
-                                  );
-                                },
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        mainAxisExtent: 127,
-                                        crossAxisCount: 1,
-                                        mainAxisSpacing: 15),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      return MoreLikeThisWidget(
+                          resultsList, isAddedToWatchList);
                     },
                   ),
                 ),
