@@ -129,6 +129,8 @@ class FullMovieScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               resultMovie?.overview ?? "",
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 13),
                             ),

@@ -81,7 +81,10 @@ class MoreLikeThisWidget extends StatelessWidget {
                     color: Colors.white, overflow: TextOverflow.ellipsis),
                 maxLines: 1,
               ),
-              Text(resultsList[index].releaseDate?.substring(0, 4) ?? "",
+              Text(
+                  resultsList[index].releaseDate == null
+                      ? ""
+                      : resultsList[index].releaseDate!.substring(0, 4),
                   style: const TextStyle(color: Colors.white)),
             ],
           );

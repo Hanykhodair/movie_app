@@ -13,30 +13,29 @@ class ResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, FullMovieScreen.routeName,
-          arguments: result),
+      onTap: () => Navigator.of(context)
+          .pushNamed(FullMovieScreen.routeName, arguments: result),
       child: Row(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // result?.posterPath != null
           //     ?
           CachedNetworkImage(
-                  imageUrl:
-                      "https://image.tmdb.org/t/p/w500/${result?.posterPath}",
-                  height: 89.h,
-                  width: 140.w,
-                   fit: BoxFit.fill,
-                  placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(
-                    color: AppColors.yellowColor,
-                  )),
-                  errorWidget: (context, url, error) => const Icon(
-                    Icons.error,
-                    color: AppColors.yellowColor,
-                  ),
-                ),
-              // : const SizedBox(),
-           SizedBox(
+            imageUrl: "https://image.tmdb.org/t/p/w500/${result?.backdropPath}",
+            height: 89.h,
+            width: 140.w,
+            fit: BoxFit.fill,
+            placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(
+              color: AppColors.yellowColor,
+            )),
+            errorWidget: (context, url, error) => const Icon(
+              Icons.error,
+              color: AppColors.yellowColor,
+            ),
+          ),
+          // : const SizedBox(),
+          SizedBox(
             width: 15.w,
           ),
           Expanded(
