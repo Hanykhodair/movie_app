@@ -36,6 +36,25 @@ class _HomeTabState extends State<HomeTab> {
                   ));
                 } else if (snapshot.data?.success == false) {
                   return const Center(child: Text("error happened"));
+                } else if (snapshot.hasError) {
+                  return AlertDialog(
+                    backgroundColor: Colors.grey.withOpacity(.35),
+                    title: Text("Error",style: TextStyle(color: Colors.white),),
+                    content: Text("check The Network",style: TextStyle(color: Colors.white)),
+                    actions: [
+                      ElevatedButton(
+                          onPressed: () => setState(() {}),
+                          child: Row(
+                            children: [
+                              Text("Refresh"),
+                              Icon(Icons.refresh)
+                            ],
+                            mainAxisSize: MainAxisSize.min,
+                          ),
+                        style: ElevatedButton.styleFrom(backgroundColor: AppColors.yellowColor),
+                )
+                    ],
+                  );
                 }
                 var resultsList = snapshot.data?.results ?? [];
                 return PopularWidget(resultsList, isAddedToWatchList);
@@ -60,12 +79,31 @@ class _HomeTabState extends State<HomeTab> {
               future: ApiManager.getUpcoming(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator(color: AppColors.yellowColor,));
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.yellowColor,
+                  ));
                 } else if (snapshot.data?.success == false) {
                   return const Center(child: Text("error happened"));
                 }
                 var resultsList = snapshot.data?.results ?? [];
-                return NewReleasesWidget(resultsList, isAddedToWatchList);
+                return Padding(
+                  padding: const EdgeInsets.only(left: 27),
+                  child: GridView.builder(
+                    itemCount: resultsList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return NewReleasesWidget(
+                          resultsList[index], isAddedToWatchList);
+                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 127,
+                            crossAxisCount: 1,
+                            childAspectRatio: 100 / 127,
+                            mainAxisSpacing: 15),
+                  ),
+                );
               },
             ),
           ),
@@ -74,7 +112,7 @@ class _HomeTabState extends State<HomeTab> {
         Container(
           color: AppColors.appBarBlack,
           width: double.infinity,
-          child:   Padding(
+          child: Padding(
             padding: const EdgeInsets.only(left: 27.0),
             child: Text("Top Rated",
                 style: TextStyle(color: Colors.white, fontSize: 17.sp)),
@@ -89,12 +127,32 @@ class _HomeTabState extends State<HomeTab> {
               future: ApiManager.getTopRated(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator(color: AppColors.yellowColor,));
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.yellowColor,
+                  ));
                 } else if (snapshot.data?.success == false) {
                   return const Center(child: Text("error happened"));
                 }
                 var resultsList = snapshot.data?.results ?? [];
-                return TopRatedWidget(resultsList, isAddedToWatchList);
+                return Padding(
+                  padding: const EdgeInsets.only(left: 27),
+                  child: GridView.builder(
+                    itemCount: resultsList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return TopRatedWidget(
+                          resultsList[index], isAddedToWatchList);
+                      ;
+                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 127,
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 15),
+                  ),
+                );
+                // TopRatedWidget(resultsList, isAddedToWatchList);
               },
             ),
           ),
