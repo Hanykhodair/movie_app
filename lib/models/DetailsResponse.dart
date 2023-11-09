@@ -28,6 +28,7 @@ class DetailsResponse {
     this.status_message,
     this.success,
     this.voteCount,
+    this.isAddedToWatchlist
   });
 
   DetailsResponse.fromJson(dynamic json) {
@@ -111,6 +112,8 @@ class DetailsResponse {
   num? status_code;
   String? status_message;
   bool? success;
+  bool? isAddedToWatchlist;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

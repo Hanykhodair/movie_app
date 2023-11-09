@@ -1,20 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/shard/network/firebase/firebase_manager.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
 import '../../models/Results.dart';
 
-class FullMovieScreen extends StatelessWidget {
+
+class FullMovieScreen extends StatefulWidget {
   static const String routeName = "FullMovieScreen";
 
-  FullMovieScreen({super.key});
+  const FullMovieScreen({super.key});
 
-  bool isAddedToWatchList = true;
+  @override
+  State<FullMovieScreen> createState() => _FullMovieScreenState();
+}
 
+class _FullMovieScreenState extends State<FullMovieScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments as Results;
+    bool? isAdded=args.isAddedToWatchlist;
     var id = args.id;
     return Scaffold(
       appBar: AppBar(
@@ -35,6 +41,8 @@ class FullMovieScreen extends StatelessWidget {
             return const Center(child: Text("error happened"));
           }
           var resultMovie = snapshot.data;
+
+          bool? isAddedToWatchList = resultMovie?.isAddedToWatchlist;
           return Column(
             children: [
               SizedBox(
@@ -105,16 +113,43 @@ class FullMovieScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        isAddedToWatchList
-                            ? const Icon(
-                                Icons.bookmark_added,
-                                color: AppColors.yellowColor,
-                                size: 36,
-                              )
-                            : const Icon(
-                                Icons.bookmark_add_rounded,
-                                color: Colors.grey,
-                                size: 36,
+                        isAdded == true
+                            ? InkWell(
+                          onTap: (){
+                            FirebaseManager.deleteMovie(args.id);
+                            setState(() {
+
+                            });
+                          },
+                              child: const Icon(
+                                  Icons.bookmark_added,
+                                  color: AppColors.yellowColor,
+                                  size: 36,
+                                ),
+                            )
+                            : InkWell(
+                                onTap: () {
+                                  Results addToWatchList = Results(
+                                    // id: resultMovie?.id,
+                                    title: args.title,
+                                    backdropPath: args.backdropPath,
+                                    releaseDate: args.releaseDate,
+                                    overview: args.overview,
+                                    posterPath: args.posterPath,
+                                    originalTitle: args.originalTitle,
+                                    isAddedToWatchlist: true,
+                                  );
+                                  FirebaseManager.addMovie(addToWatchList);
+                                  setState(() {
+
+                                  });
+
+                                },
+                                child: const Icon(
+                                  Icons.bookmark_add_rounded,
+                                  color: Colors.grey,
+                                  size: 36,
+                                ),
                               )
                       ],
                     ),
@@ -184,7 +219,8 @@ class FullMovieScreen extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Stack(
@@ -214,21 +250,52 @@ class FullMovieScreen extends StatelessWidget {
                                                         const Center(
                                                   child: Icon(
                                                     Icons.error,
-                                                    color: AppColors.yellowColor,
+                                                    color:
+                                                        AppColors.yellowColor,
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                            isAddedToWatchList
-                                                ? const Icon(
-                                                    Icons.bookmark_added,
-                                                    color: AppColors.yellowColor,
-                                                    size: 36,
+                                            isAddedToWatchList == true
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      FirebaseManager
+                                                          .deleteMovie(
+                                                          args.id);
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.bookmark_added,
+                                                      color:
+                                                          AppColors.yellowColor,
+                                                      size: 36,
+                                                    ),
                                                   )
-                                                : const Icon(
-                                                    Icons.bookmark_add_rounded,
-                                                    color: Colors.grey,
-                                                    size: 36,
+                                                : InkWell(
+                                                    onTap: () {
+                                                      Results addToWatchList =
+                                                          Results(
+                                                            title: args.title,
+                                                            backdropPath: args.backdropPath,
+                                                            releaseDate: args.releaseDate,
+                                                            overview: args.overview,
+                                                            posterPath: args.posterPath,
+                                                            originalTitle: args.originalTitle,
+                                                            isAddedToWatchlist: true,
+                                                          );
+                                                      FirebaseManager.addMovie(addToWatchList);
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                    child: const Icon(
+                                                      Icons
+                                                          .bookmark_add_rounded,
+                                                      color: Colors.grey,
+                                                      size: 36,
+                                                    ),
                                                   ),
                                           ],
                                         ),
@@ -249,9 +316,9 @@ class FullMovieScreen extends StatelessWidget {
                                         ],
                                       ),
                                       Text(resultsList[index].title ?? "",
-                                          maxLines:1,
+                                          maxLines: 1,
                                           style: const TextStyle(
-                                            overflow: TextOverflow.ellipsis,
+                                              overflow: TextOverflow.ellipsis,
                                               color: Colors.white)),
                                       Text(resultsList[index].releaseDate ?? "",
                                           style: const TextStyle(

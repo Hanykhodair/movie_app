@@ -1,42 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:movie_app/models/movie_model.dart';
+import 'package:movie_app/models/Results.dart';
 
 class FirebaseManager {
 
 
-  static CollectionReference<MovieModel> getMovieCollection() {
+  static CollectionReference<Results> getMovieCollection() {
     return FirebaseFirestore.instance.collection("Movie").withConverter<
-        MovieModel>(fromFirestore: (snapshot, _) {
-      return MovieModel.fromJason(snapshot.data()!);
-    }, toFirestore: (task, _) {
-      return task.toJson();
+        Results>(fromFirestore: (snapshot, _) {
+      return Results.fromJson
+        (snapshot.data()!);
+    }, toFirestore: (Movie, _) {
+      return Movie.toJson();
     },
     );
   }
 
-  static Future<void> addMovie(MovieModel movie) {
+  static Future<void> addMovie(Results movie) {
+    //Results? result;
     var collection = getMovieCollection();
     var docRef = collection.doc();
-    movie.id = docRef.id;
+    //movie.id = docRef.id as num ;
     return docRef.set(movie);
   }
-
-  static Stream<QuerySnapshot<MovieModel>> getMovie(DateTime date) {
-    return getMovieCollection()
-        .snapshots();
+  static Future<void> deleteMovie(num? id){
+    return getMovieCollection().doc(id as String?).delete();
   }
 
-  static Future<void> deleteTask(String movieId) {
-    return getMovieCollection().doc(movieId).delete();
+  static Future<void> addedToFavorite(num id, bool isFavorite) {
+    return getMovieCollection().doc(id as String?).update({"isAddedToWatchlist": isFavorite});
   }
 
-
-  static Future<void> updateTask(MovieModel movie) {
-    return getMovieCollection().doc(movie.id).update({
-      "title": movie.title,
-      "description": movie.description,
-      "publishAt": movie.publishAt
-    });
+  static Stream<QuerySnapshot<Results>> getMovie() {
+    return getMovieCollection().snapshots();
   }
 
 
