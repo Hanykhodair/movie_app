@@ -75,7 +75,11 @@ class TopRatedWidget extends StatelessWidget {
               color: Colors.white, overflow: TextOverflow.ellipsis),
           maxLines: 1,
         ),
-        Text(result.releaseDate?.substring(0, 4) ?? "",
+        Text(
+            result.releaseDate == "" ||
+                result.releaseDate == null
+                ? "":
+            result.releaseDate?.substring(0, 4) ?? "",
             style: const TextStyle(color: Colors.white)),
       ],
     );
