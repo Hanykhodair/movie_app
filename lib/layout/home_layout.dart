@@ -5,7 +5,7 @@ import 'package:movie_app/ui/tabs/search/search_tab.dart';
 import 'package:movie_app/ui/tabs/watch_list_tab.dart';
 
 import '../ui/tabs/brows_tab.dart';
-import '../ui/tabs/home_tab.dart';
+import '../ui/tabs/home/home_tab.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = 'homeLayout';

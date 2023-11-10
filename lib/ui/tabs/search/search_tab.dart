@@ -78,12 +78,21 @@ class _SearchTabState extends State<SearchTab> {
               }
               if (snapshot.hasError) {
                 return AlertDialog(
-                  title: const Text("Error"),
-                  content: Text(snapshot.data?.status_message ?? ""),
+                  backgroundColor: Colors.grey.withOpacity(.35),
+                  title: Text("Error",style: TextStyle(color: Colors.white),),
+                  content: Text("check The Network",style: TextStyle(color: Colors.white)),
                   actions: [
                     ElevatedButton(
-                        onPressed: () => setState(() {}),
-                        child: const Icon(Icons.refresh))
+                      onPressed: () => setState(() {}),
+                      child: Row(
+                        children: [
+                          Text("Refresh"),
+                          Icon(Icons.refresh)
+                        ],
+                        mainAxisSize: MainAxisSize.min,
+                      ),
+                      style: ElevatedButton.styleFrom(backgroundColor: AppColors.yellowColor),
+                    )
                   ],
                 );
               }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/shard/network/firebase/firebase_manager.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
+import 'package:movie_app/ui/screens/widgets/more_like_this_widget.dart';
 import '../../models/Results.dart';
 
 
@@ -36,7 +37,10 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
           // print(args.posterPath);
           // print(args.backdropPath);
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: AppColors.yellowColor,
+            ));
           } else if (snapshot.data?.success == false) {
             return const Center(child: Text("error happened"));
           }
@@ -160,6 +164,8 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
                               resultMovie?.overview ?? "",
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 13),
                             ),
@@ -197,11 +203,15 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
                     builder: (context, snapshot) {
                       // print(id);
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: AppColors.yellowColor,
+                        ));
                       } else if (snapshot.data?.success == false) {
                         return const Center(child: Text("error happened"));
                       }
                       var resultsList = snapshot.data?.results ?? [];
+
                       return Padding(
                         padding: const EdgeInsets.only(left: 27),
                         child: Column(
@@ -336,6 +346,7 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
                           ],
                         ),
                       );
+
                     },
                   ),
                 ),
