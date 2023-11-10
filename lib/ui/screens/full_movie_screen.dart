@@ -1,21 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/shard/network/firebase/firebase_manager.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
 import 'package:movie_app/ui/screens/widgets/more_like_this_widget.dart';
 import '../../models/Results.dart';
 
-class FullMovieScreen extends StatelessWidget {
+
+class FullMovieScreen extends StatefulWidget {
   static const String routeName = "FullMovieScreen";
 
-  FullMovieScreen({super.key});
+  const FullMovieScreen({super.key});
 
-  bool isAddedToWatchList = true;
+  @override
+  State<FullMovieScreen> createState() => _FullMovieScreenState();
+}
 
+class _FullMovieScreenState extends State<FullMovieScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments as Results;
+    bool? isAdded=args.isAddedToWatchlist;
     var id = args.id;
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +45,8 @@ class FullMovieScreen extends StatelessWidget {
             return const Center(child: Text("error happened"));
           }
           var resultMovie = snapshot.data;
+
+          bool? isAddedToWatchList = resultMovie?.isAddedToWatchlist;
           return Column(
             children: [
               SizedBox(
@@ -109,16 +117,43 @@ class FullMovieScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        isAddedToWatchList
-                            ? const Icon(
-                                Icons.bookmark_added,
-                                color: AppColors.yellowColor,
-                                size: 36,
-                              )
-                            : const Icon(
-                                Icons.bookmark_add_rounded,
-                                color: Colors.grey,
-                                size: 36,
+                        isAdded == true
+                            ? InkWell(
+                          onTap: (){
+                            FirebaseManager.deleteMovie(args.id);
+                            setState(() {
+
+                            });
+                          },
+                              child: const Icon(
+                                  Icons.bookmark_added,
+                                  color: AppColors.yellowColor,
+                                  size: 36,
+                                ),
+                            )
+                            : InkWell(
+                                onTap: () {
+                                  Results addToWatchList = Results(
+                                    // id: resultMovie?.id,
+                                    title: args.title,
+                                    backdropPath: args.backdropPath,
+                                    releaseDate: args.releaseDate,
+                                    overview: args.overview,
+                                    posterPath: args.posterPath,
+                                    originalTitle: args.originalTitle,
+                                    isAddedToWatchlist: true,
+                                  );
+                                  FirebaseManager.addMovie(addToWatchList);
+                                  setState(() {
+
+                                  });
+
+                                },
+                                child: const Icon(
+                                  Icons.bookmark_add_rounded,
+                                  color: Colors.grey,
+                                  size: 36,
+                                ),
                               )
                       ],
                     ),
@@ -176,8 +211,142 @@ class FullMovieScreen extends StatelessWidget {
                         return const Center(child: Text("error happened"));
                       }
                       var resultsList = snapshot.data?.results ?? [];
-                      return MoreLikeThisWidget(
-                          resultsList, isAddedToWatchList);
+
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 27),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("More Like This",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(height: 15.h),
+                            Expanded(
+                              child: GridView.builder(
+                                itemCount: resultsList.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Stack(
+                                          alignment: Alignment.topLeft,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).pushNamed(
+                                                  FullMovieScreen.routeName,
+                                                  arguments: resultsList[index],
+                                                );
+                                              },
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    "https://image.tmdb.org/t/p/w500/${resultsList[index].posterPath ?? "kP0OOAa4GTZSUPW8fgPbk1OmKEW.jpg"}",
+                                                height: 177.74.h,
+                                                width: 136.87.w,
+                                                fit: BoxFit.fill,
+                                                placeholder: (context, url) =>
+                                                    const Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                  color: AppColors.yellowColor,
+                                                )),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Center(
+                                                  child: Icon(
+                                                    Icons.error,
+                                                    color:
+                                                        AppColors.yellowColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            isAddedToWatchList == true
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      FirebaseManager
+                                                          .deleteMovie(
+                                                          args.id);
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.bookmark_added,
+                                                      color:
+                                                          AppColors.yellowColor,
+                                                      size: 36,
+                                                    ),
+                                                  )
+                                                : InkWell(
+                                                    onTap: () {
+                                                      Results addToWatchList =
+                                                          Results(
+                                                            title: args.title,
+                                                            backdropPath: args.backdropPath,
+                                                            releaseDate: args.releaseDate,
+                                                            overview: args.overview,
+                                                            posterPath: args.posterPath,
+                                                            originalTitle: args.originalTitle,
+                                                            isAddedToWatchlist: true,
+                                                          );
+                                                      FirebaseManager.addMovie(addToWatchList);
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                    child: const Icon(
+                                                      Icons
+                                                          .bookmark_add_rounded,
+                                                      color: Colors.grey,
+                                                      size: 36,
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.star,
+                                              color: AppColors.yellowColor),
+                                          SizedBox(width: 4.w),
+                                          Text(
+                                              resultsList[index]
+                                                  .voteAverage
+                                                  .toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: const TextStyle(
+                                                  color: Colors.white))
+                                        ],
+                                      ),
+                                      Text(resultsList[index].title ?? "",
+                                          maxLines: 1,
+                                          style: const TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Colors.white)),
+                                      Text(resultsList[index].releaseDate ?? "",
+                                          style: const TextStyle(
+                                              color: Colors.white)),
+                                    ],
+                                  );
+                                },
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisExtent: 127,
+                                        crossAxisCount: 1,
+                                        mainAxisSpacing: 15),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+
                     },
                   ),
                 ),

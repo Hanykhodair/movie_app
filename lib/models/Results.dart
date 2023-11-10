@@ -14,6 +14,7 @@ class Results {
     this.video,
     this.voteAverage,
     this.voteCount,
+    this.isAddedToWatchlist
   });
 
   Results.fromJson(dynamic json) {
@@ -31,6 +32,7 @@ class Results {
     video = json['video'];
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
+    isAddedToWatchlist=json['isAddedToWatchlist'];
   }
 
   bool? adult;
@@ -47,6 +49,8 @@ class Results {
   bool? video;
   num? voteAverage;
   num? voteCount;
+  bool? isAddedToWatchlist=false;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -64,6 +68,7 @@ class Results {
     map['video'] = video;
     map['vote_average'] = voteAverage;
     map['vote_count'] = voteCount;
+    map['isAddedToWatchlist'] = isAddedToWatchlist;
     return map;
   }
 }
