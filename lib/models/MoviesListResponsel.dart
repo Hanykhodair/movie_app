@@ -31,7 +31,7 @@ class Genres {
     id = json['id'];
     name = json['name'];
   }
-  num? id;
+  int? id;
   String? name;
 
   Map<String, dynamic> toJson() {

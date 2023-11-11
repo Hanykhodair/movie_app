@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie_app/models/MoviesListResponsel.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/ui/tabs/brows/widgets/brows_tab_item.dart';
 
+import '../../../models/MovieDiscoverResponse.dart';
 import '../../../shard/style/colors.dart';
 
 class BrowseTab extends StatefulWidget {
@@ -31,7 +33,7 @@ class _BrowseTabState extends State<BrowseTab> {
           Expanded(
             child: FutureBuilder(
               future: ApiManager.getMoviesList(),
-              builder: (context, snapshot) {
+              builder: (context, snapshot)  {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                       child: CircularProgressIndicator(
@@ -65,7 +67,7 @@ class _BrowseTabState extends State<BrowseTab> {
                       BrowsTabItem(response[index]),
                   itemCount: response.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 14.w,
+                      crossAxisSpacing: 14.w,
                       mainAxisSpacing: 16.h,
                       childAspectRatio: 4/3,
                       crossAxisCount: 2),
@@ -77,4 +79,5 @@ class _BrowseTabState extends State<BrowseTab> {
       ),
     );
   }
+
 }

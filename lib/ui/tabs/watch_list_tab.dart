@@ -25,7 +25,7 @@ class WatchListTab extends StatelessWidget {
                 List<Results> resultMovies=snapshot.data?.docs.map((e) =>
                     e.data()).toList()??[];
                 return ListView.separated(itemBuilder: (context, index) {
-                  return ResultWidget(resultMovies[index]);
+                  return SearchResultWidget(resultMovies[index]);
                 },
                   itemCount: resultMovies.length, separatorBuilder: (BuildContext context, int index) { return SizedBox(height: 15.h,); },
                 );
