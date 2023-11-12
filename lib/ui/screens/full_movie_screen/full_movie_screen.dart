@@ -42,7 +42,6 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
           }
           var resultMovie = snapshot.data;
 
-          bool? isAddedToWatchList = resultMovie?.isAddedToWatchlist;
           return Column(
             children: [
               SizedBox(

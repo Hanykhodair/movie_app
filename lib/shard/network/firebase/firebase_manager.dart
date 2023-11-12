@@ -38,12 +38,7 @@ class FirebaseManager {
     return documents.length == 1;
   }
 
- /* static Future<dynamic> doesMovieExist( title) async {
-     await FirebaseFirestore.instance
-         .collection('Movie').where('title', isEqualTo: title)
-         .get()
-         .then((value) => value.size > 0 ? true : false);
-  }*/
+
 
 
   static Stream<QuerySnapshot<Results>> getMovie() {
