@@ -20,7 +20,6 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments as Results;
-    bool? isAdded=args.isAddedToWatchlist;
     var id = args.id;
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +42,6 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
           }
           var resultMovie = snapshot.data;
 
-          bool? isAddedToWatchList = resultMovie?.isAddedToWatchlist;
           return Column(
             children: [
               SizedBox(
@@ -114,8 +112,52 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
                             ),
                           ),
                         ),
-                        isAdded == true
-                            ? InkWell(
+                       FutureBuilder(future: FirebaseManager.doesMovieExist(args.title), builder: (context, snapshot) {
+                         if(snapshot.data==null){
+                           return Container(width:100,height:100,color:Colors.red);
+                         }else if(snapshot.data!){
+                           return
+                           InkWell(
+                             onTap: (){
+                               FirebaseManager.deleteMovie(args.title);
+                               setState(() {
+
+                               });
+                             },
+                             child: const Icon(
+                               Icons.bookmark_added,
+                               color: AppColors.yellowColor,
+                               size: 36,
+                             ),
+                           );
+                         }
+                         else return  InkWell(
+                           onTap: () {
+                             Results addToWatchList = Results(
+                               // id: resultMovie?.id,
+                               title: args.title,
+                               backdropPath: args.backdropPath,
+                               releaseDate: args.releaseDate,
+                               overview: args.overview,
+                               posterPath: args.posterPath,
+                               originalTitle: args.originalTitle,
+                               isAddedToWatchlist: true,
+                             );
+                             FirebaseManager.addMovie(addToWatchList);
+                             setState(() {
+
+                             });
+
+                           },
+                           child: const Icon(
+                             Icons.bookmark_add_rounded,
+                             color: Colors.grey,
+                             size: 36,
+                           ),
+                         );
+                       },)
+                     //  FirebaseManager.doesMovieExist(args.title)==true
+                         /*   ? InkWell(
                           onTap: (){
                             FirebaseManager.deleteMovie(args.id);
                             setState(() {
@@ -151,7 +193,7 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
                                   color: Colors.grey,
                                   size: 36,
                                 ),
-                              )
+                              )*/
                       ],
                     ),
                     Flexible(
@@ -263,47 +305,7 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
                                                 ),
                                               ),
                                             ),
-                                            isAddedToWatchList == true
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      FirebaseManager
-                                                          .deleteMovie(
-                                                          args.id);
-                                                      setState(() {
 
-                                                      });
-                                                    },
-                                                    child: const Icon(
-                                                      Icons.bookmark_added,
-                                                      color:
-                                                          AppColors.yellowColor,
-                                                      size: 36,
-                                                    ),
-                                                  )
-                                                : InkWell(
-                                                    onTap: () {
-                                                      Results addToWatchList =
-                                                          Results(
-                                                            title: args.title,
-                                                            backdropPath: args.backdropPath,
-                                                            releaseDate: args.releaseDate,
-                                                            overview: args.overview,
-                                                            posterPath: args.posterPath,
-                                                            originalTitle: args.originalTitle,
-                                                            isAddedToWatchlist: true,
-                                                          );
-                                                      FirebaseManager.addMovie(addToWatchList);
-                                                      setState(() {
-
-                                                      });
-                                                    },
-                                                    child: const Icon(
-                                                      Icons
-                                                          .bookmark_add_rounded,
-                                                      color: Colors.grey,
-                                                      size: 36,
-                                                    ),
-                                                  ),
                                           ],
                                         ),
                                       ),

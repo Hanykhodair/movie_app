@@ -49,7 +49,7 @@ class Results {
   bool? video;
   num? voteAverage;
   num? voteCount;
-  bool? isAddedToWatchlist=false;
+  bool? isAddedToWatchlist;
 
 
   Map<String, dynamic> toJson() {
