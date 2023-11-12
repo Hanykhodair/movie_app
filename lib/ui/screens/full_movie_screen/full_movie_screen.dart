@@ -4,8 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/shard/network/firebase/firebase_manager.dart';
 import 'package:movie_app/shard/network/remote/api_manager.dart';
 import 'package:movie_app/shard/style/colors.dart';
-import 'package:movie_app/ui/screens/widgets/more_like_this_widget.dart';
-import '../../models/Results.dart';
+import '../../../models/Results.dart';
 
 
 class FullMovieScreen extends StatefulWidget {
@@ -34,8 +33,6 @@ class _FullMovieScreenState extends State<FullMovieScreen> {
       body: FutureBuilder(
         future: ApiManager.getDetails(id.toString()),
         builder: (context, snapshot) {
-          // print(args.posterPath);
-          // print(args.backdropPath);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
                 child: CircularProgressIndicator(

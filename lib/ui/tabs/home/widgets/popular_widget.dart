@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../models/Results.dart';
 import '../../../../shard/style/colors.dart';
-import '../../../screens/full_movie_screen.dart';
+import '../../../screens/full_movie_screen/full_movie_screen.dart';
 
 class PopularWidget extends StatelessWidget {
   List<Results> resultsList;

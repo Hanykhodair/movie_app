@@ -105,7 +105,7 @@ class _SearchTabState extends State<SearchTab> {
                     Divider(color: Colors.white.withOpacity(.5)),
                 itemCount: searchResult.length,
                 itemBuilder: (context, index) {
-                  return ResultWidget(searchResult[index]);
+                  return SearchResultWidget(searchResult[index]);
                 },
               );
             },

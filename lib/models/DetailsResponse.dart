@@ -41,7 +41,7 @@ class DetailsResponse {
     if (json['genres'] != null) {
       genres = [];
       json['genres'].forEach((v) {
-        genres?.add(Genres.fromJson(v));
+        genres?.add(GenresDetails.fromJson(v));
       });
     }
     homepage = json['homepage'];
@@ -88,7 +88,7 @@ class DetailsResponse {
   String? backdropPath;
   BelongsToCollection? belongsToCollection;
   num? budget;
-  List<Genres>? genres;
+  List<GenresDetails>? genres;
   String? homepage;
   num? id;
   String? imdbId;
@@ -240,13 +240,13 @@ class ProductionCompanies {
   }
 }
 
-class Genres {
-  Genres({
+class GenresDetails {
+  GenresDetails({
     this.id,
     this.name,
   });
 
-  Genres.fromJson(dynamic json) {
+  GenresDetails.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
   }

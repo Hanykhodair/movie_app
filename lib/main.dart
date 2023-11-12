@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movie_app/layout/home_layout.dart';
-import 'package:movie_app/ui/screens/full_movie_screen.dart';
+import 'package:movie_app/ui/screens/full_movie_screen/full_movie_screen.dart';
+import 'package:movie_app/ui/screens/movie_%20discover/movies_discover.dart';
 
 import 'firebase_options.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           routes: {
             HomeLayout.routeName: (context) => const HomeLayout(),
             FullMovieScreen.routeName: (context) => FullMovieScreen(),
+            MovieDiscoverScreen.routName:(context) => MovieDiscoverScreen()
           }),
     );
   }

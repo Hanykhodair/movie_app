@@ -7,7 +7,7 @@ import 'package:movie_app/ui/tabs/home/widgets/new_releases_wiget.dart';
 import 'package:movie_app/ui/tabs/home/widgets/popular_widget.dart';
 import 'package:movie_app/ui/tabs/home/widgets/top_rated_widget.dart';
 import '../../../shard/style/colors.dart';
-import '../../screens/full_movie_screen.dart';
+import '../../screens/full_movie_screen/full_movie_screen.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});

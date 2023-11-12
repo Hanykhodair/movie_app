@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movie_app/models/Results.dart';
-import 'package:movie_app/shard/style/colors.dart';
+ import 'package:movie_app/shard/style/colors.dart';
 import 'package:movie_app/ui/screens/full_movie_screen/full_movie_screen.dart';
 
-class SearchResultWidget extends StatelessWidget {
-  Results? result;
+import '../../../../models/Results.dart';
 
-  SearchResultWidget(this.result, {super.key});
+class  ResultWidget extends StatelessWidget {
+ Results? result;
+
+   ResultWidget(this.result, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +28,8 @@ class SearchResultWidget extends StatelessWidget {
             fit: BoxFit.fill,
             placeholder: (context, url) => const Center(
                 child: CircularProgressIndicator(
-              color: AppColors.yellowColor,
-            )),
+                  color: AppColors.yellowColor,
+                )),
             errorWidget: (context, url, error) => const Icon(
               Icons.error,
               color: AppColors.yellowColor,
