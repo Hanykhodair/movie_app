@@ -10,28 +10,37 @@ class WatchListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Column(
-        children: [Expanded(
-          child: StreamBuilder(stream: FirebaseManager.getMovie(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Text("something error"),
-                  );
-                }
-                List<Results> resultMovies=snapshot.data?.docs.map((e) =>
-                    e.data()).toList()??[];
-                return ListView.separated(itemBuilder: (context, index) {
+    return Column(
+      children: [
+        Expanded(
+          child: StreamBuilder(
+            stream: FirebaseManager.getMovie(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text("something error"),
+                );
+              }
+              List<Results> resultMovies =
+                  snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
+              return ListView.separated(
+                itemBuilder: (context, index) {
                   return SearchResultWidget(resultMovies[index]);
                 },
-                  itemCount: resultMovies.length, separatorBuilder: (BuildContext context, int index) { return SizedBox(height: 15.h,); },
-                );
-
-              },),
-        )],
-      );
+                itemCount: resultMovies.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 15.h,
+                  );
+                },
+              );
+            },
+          ),
+        )
+      ],
+    );
   }
 }

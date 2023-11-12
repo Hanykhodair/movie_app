@@ -22,13 +22,29 @@ class FirebaseManager {
     //movie.id = docRef.id as num ;
     return docRef.set(movie);
   }
-  static Future<void> deleteMovie(num? id){
-    return getMovieCollection().doc(id as String?).delete();
+  static Future<void> deleteMovie(String? title)async{
+    var responce=await getMovieCollection().where('title',isEqualTo:title).get();
+    responce.docs[0].reference.delete();
   }
 
-  static Future<void> addedToFavorite(num id, bool isFavorite) {
-    return getMovieCollection().doc(id as String?).update({"isAddedToWatchlist": isFavorite});
+ static Future<bool> doesMovieExist(String? name) async {
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('Movie')
+        .where('title', isEqualTo: name)
+        .limit(1)
+        .get();
+    final List<DocumentSnapshot> documents = result.docs;
+
+    return documents.length == 1;
   }
+
+ /* static Future<dynamic> doesMovieExist( title) async {
+     await FirebaseFirestore.instance
+         .collection('Movie').where('title', isEqualTo: title)
+         .get()
+         .then((value) => value.size > 0 ? true : false);
+  }*/
+
 
   static Stream<QuerySnapshot<Results>> getMovie() {
     return getMovieCollection().snapshots();
